@@ -5,12 +5,12 @@
 
 void drawChar(int x, int y, char *string)
 {
-    float r=0;
-    float g=0;
-    float b=0;
+    float r=0.8;
+    float g=0.8;
+    float b=0.8;
     //int font=GLUT_BITMAP_TIMES_ROMAN_10;
     //GLUT_BITMAP_TIMES_ROMAN_10
-    //glColor3f( r, g, b );
+    glColor3f( r, g, b );
     glRasterPos2f(x, y);
     int len, i;
     len = (int)strlen(string);

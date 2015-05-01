@@ -60,8 +60,8 @@ void MonotonePartition :: takeInput()
         vertex.push_back(Vertex(i,a,b));
         helper.push_back(-1);
     }
-/// list of edges -> 1,0 - 2,1 - ... - 0,last
 
+/// list of edges -> 1,0 - 2,1 - ... - 0,last
     edgeList.push_back(Edges(vertex[0],vertex[totalPoint-1]));
     edgePointer.push_back(it);
     for(int i=0; i<totalPoint-1; i++)
@@ -69,21 +69,7 @@ void MonotonePartition :: takeInput()
         edgeList.push_back(Edges(vertex[i+1],vertex[i]));
         edgePointer.push_back(it);
     }
-
-
-    //printf("it->%d\n",*it);
-
     fclose(ifp);
-    //fclose(ofp);
-    //testing priority queue
-    /*
-    while(!pq.empty())
-    {
-        Vertex v=pq.top();
-        printf("%lf,%lf\n",v.x,v.y);
-        pq.pop();
-    }
-    */
 }
 void MonotonePartition :: drawDiagonals()
 {
@@ -117,7 +103,6 @@ void MonotonePartition :: drawOriginalPolygon()
         itoa(i,num,10);
         drawChar(vertex[i].x,vertex[i].y,num);
     }
-
 }
 
 int MonotonePartition :: getVertexType(int id)
@@ -217,7 +202,7 @@ void MonotonePartition :: vertexHandler(int vertexId, int vertexType,double curY
     if(vertexType==START_VERTEX)
     {
         printf("start vertex\n");
-        it=bst.insert(BSTedges(edgeList[vertexId],vertexId,curY)).first;
+        it=bst.insert(BSTedges(vertexId,edgeList[vertexId].a.x)).first;
         edgePointer[vertexId]=it;
         helper[vertexId]=vertexId;
 
@@ -226,12 +211,10 @@ void MonotonePartition :: vertexHandler(int vertexId, int vertexType,double curY
     else if(vertexType==END_VERTEX)
     {
         printf("end vertex\n");
-        //int i=((vertexId<<1)-1)%totalPoint;//correct index for i-1
         if(getVertexType(helper[next])== MERGE_VERTEX)
         {
             diagonals.push_back(Edges(vertex[vertexId],vertex[helper[next]]));
         }
-        //add later
         bst.erase(edgePointer[next]);
     }
     else if(vertexType==SPLIT_VERTEX)
@@ -241,7 +224,8 @@ void MonotonePartition :: vertexHandler(int vertexId, int vertexType,double curY
         it = bst.lower_bound(BSTedges(vertex[vertexId].x));
         diagonals.push_back(Edges(vertex[vertexId],vertex[helper[(*it).index]]));
         helper[(*it).index]=vertexId;
-        it=bst.insert(BSTedges(edgeList[vertexId],vertexId,curY)).first;
+        //it=bst.insert(BSTedges(edgeList[vertexId],vertexId,curY)).first;
+        it=bst.insert(BSTedges(vertexId,edgeList[vertexId].getHorzDistnc(curY))).first;
         edgePointer[vertexId]=it;
 
         helper[vertexId]=vertexId;
@@ -284,7 +268,8 @@ void MonotonePartition :: vertexHandler(int vertexId, int vertexType,double curY
             bst.erase(edgePointer[next]);
             printf("after erase\n");
 
-            it=bst.insert(BSTedges(edgeList[vertexId],vertexId,curY)).first;
+            //it=bst.insert(BSTedges(edgeList[vertexId],vertexId,curY)).first;
+            it=bst.insert(BSTedges(vertexId,edgeList[vertexId].getHorzDistnc(curY))).first;
             edgePointer[vertexId]=it;
             helper[vertexId]=vertexId;
         }

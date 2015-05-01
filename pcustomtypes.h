@@ -132,22 +132,16 @@ struct Edges
 {
     Vertex a;
     Vertex b;
-    double keyVal;
+
     Edges() {}
     Edges(Vertex m, Vertex n)
     {
         a=m;
         b=n;
-        keyVal=0;
     }
-    Edges(Vertex m, Vertex n, double currentY)
+    double getHorzDistnc(double currentY)
     {
-        a=m;
-        b=n;
-        setKey(currentY);
-    }
-    double setKey(double currentY)
-    {
+        double keyVal;
         if(a.y == b.y)
         {
             keyVal = (a.x<b.x)?a.x:b.x;
@@ -158,46 +152,28 @@ struct Edges
         }
         return keyVal;
     }
-    bool operator<(const Edges &edg) const
-    {
-        return keyVal<edg.keyVal;
-    }
 };
 typedef Edges Edges;
 
 struct BSTedges
 {
-    Edges e;
     int index;
     double keyVal;
     BSTedges(double currentY)
     {
         keyVal=currentY;
+        index=-1;
     }
-    BSTedges(Edges edge, int i, double currentY)
+
+    BSTedges(int i, double k)
     {
-        e=edge;
         index=i;
-        if(edge.a.y == edge.b.y)
-        {
-            keyVal = (edge.a.x<edge.b.x)?edge.a.x:edge.b.x;
-        }
-        else
-        {
-            keyVal= (currentY-edge.a.y)*(edge.b.x - edge.a.x)/(edge.b.y - edge.a.y)+ edge.a.x;
-        }
-        //return keyVal;
+        keyVal=k;
         printf("index=%5d,keyVal = %5.2lf\n",index,keyVal);
     }
     bool operator<(const BSTedges &edg) const
     {
         return keyVal>edg.keyVal;
     }
-    /*
-    bool operator() (const BSTedges& lhs, const BSTedges& rhs) const
-    {
-        return lhs.keyVal>rhs.keyVal;
-    }
-    */
 };
 #endif // CUSTOMTYPES_H
