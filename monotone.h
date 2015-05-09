@@ -62,7 +62,7 @@ MonotonePartition :: MonotonePartition()
 void MonotonePartition :: takeInput()
 {
     FILE *ifp;
-    ifp = fopen("I:\\Dropbox\\open gl\\Monotone Partition\\input.txt","r");//for Desktop
+    ifp = fopen("I:\\Dropbox\\open gl\\Monotone Partition\\input2.txt","r");//for Desktop
 
     fscanf(ifp,"%d",&totalPoint);
     double a,b;
@@ -242,7 +242,10 @@ void MonotonePartition :: vertexHandler(int vertexId, int vertexType,double curY
         printf("split vertex\n");
         Edges edg;
         it = bst.lower_bound(BSTedges(vertex[vertexId].x));
-        if(it==bst.end())it--;
+        if(it==bst.end())
+        {
+            it--;
+        }
         printf("found lower bound %d\n",(*it).index);
         diagonals.push_back(Edges(vertex[vertexId],vertex[helper[(*it).index]]));
         helper[(*it).index]=vertexId;
@@ -269,15 +272,8 @@ void MonotonePartition :: vertexHandler(int vertexId, int vertexType,double curY
         it = bst.lower_bound(BSTedges(vertex[vertexId].x));
         //printf("found lower bound %d\n",(*it).index);
         //it--;
-        if(it==bst.begin())
+        if (it==bst.end())
         {
-            //printf("bst begin\n");
-            //it++;
-            //printf("lower bound not found\n");
-        }
-        else if (it==bst.end())
-        {
-            //printf("bst end\n");
             it--;
         }
         printf("found lower bound %d\n",(*it).index);
@@ -315,6 +311,10 @@ void MonotonePartition :: vertexHandler(int vertexId, int vertexType,double curY
         {
             printf("inside else\n");
             it = bst.lower_bound(BSTedges(vertex[vertexId].x));
+            if (it==bst.end())
+            {
+                it--;
+            }
             if(getVertexType(helper[(*it).index]) == MERGE_VERTEX)
             {
                 diagonals.push_back(Edges(vertex[vertexId],vertex[helper[(*it).index]]));
