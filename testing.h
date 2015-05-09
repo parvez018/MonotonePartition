@@ -3,6 +3,7 @@
 
 #include <set>
 
+set<BSTedges> bst;
 void drawChar(int x, int y, char *string)
 {
     float r=0.8;
@@ -39,9 +40,28 @@ void priority_queue_test()
         pq.pop();
     }
 }
+void printBst()
+{
+    printf("bst now >>> ");
+    set<BSTedges>::iterator itt;
+    for(itt=bst.begin(); itt!=bst.end(); itt++)
+    {
+        printf("%d,%3.2lf ",(*itt).index,(*itt).keyVal);
+    }
+    printf("\n\n");
+}
 
 void stlSetTest()
 {
+    set<BSTedges>::iterator i;
+    bst.insert(BSTedges(4,10));
+    bst.insert(BSTedges(2,12));
+    printBst();
+    i=bst.lower_bound(BSTedges(7));
+    if(i==bst.end())printf("not found\n");
+    else
+        printf("found lower bound %d,%lf\n",(*i).index,(*i).keyVal);
+    /*
     set<int> mySet;
     set<int>::iterator it;
     //printf("it->%d\n",*it);
@@ -59,6 +79,7 @@ void stlSetTest()
     printf("low=%d\n",a);
     a = *mySet.upper_bound(d);
     printf("high=%d\n",a);
+    */
 }
 
 

@@ -17,6 +17,7 @@ double topY = 0;
 
 double mulX = 0.09;
 double mulY = 0.09;
+double zoom = 0.05;
 double delta = 1.0;
 
 MonotonePartition mp;
@@ -39,12 +40,16 @@ void specialKeyListener(int key, int x, int y) {
 
 	case GLUT_KEY_PAGE_UP:
 		if (mulX <= 1.0) {
-			mulX += 0.1;
-			mulY += 0.1;
+			mulX += zoom;
+			mulY += zoom;
 		}
 		break;
 	case GLUT_KEY_PAGE_DOWN:
 		//angle-=1;
+		if (mulX >= 0.0) {
+			mulX -= zoom;
+			mulY -= zoom;
+		}
 		break;
 
 	case GLUT_KEY_INSERT:
@@ -65,6 +70,7 @@ void specialKeyListener(int key, int x, int y) {
 	}
 	glutPostRedisplay();
 }
+
 
 void drawAxes() {
     glColor3f(0,0,0);

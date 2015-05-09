@@ -164,7 +164,6 @@ struct BSTedges
         keyVal=currentY;
         index=-1;
     }
-
     BSTedges(int i, double k)
     {
         index=i;
@@ -173,7 +172,7 @@ struct BSTedges
     }
     bool operator<(const BSTedges &edg) const
     {
-        return keyVal>edg.keyVal;
+        return keyVal<edg.keyVal;
     }
 };
 #endif // CUSTOMTYPES_H
